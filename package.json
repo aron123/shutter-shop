@@ -15,12 +15,15 @@
     "react-dom": "^16.8.6",
     "react-scripts": "2.1.8"
   },
+  "devDependencies": {
+    "nodemon": "^1.18.11"
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "start-server": "nodemon server/index.js"
+    "start-server": "nodemon server"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -31,7 +34,5 @@
     "not ie <= 11",
     "not op_mini all"
   ],
-  "devDependencies": {
-    "nodemon": "^1.18.11"
-  }
+  "proxy": "http://localhost:4000"
 }
