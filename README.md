@@ -12,4 +12,4 @@ Kiss Áron, UHV61T
 - React 
 
 ## Use-case diagram
-![use case diagram][docs/useCase.png]
+![use case diagram](docs/useCase.png)
