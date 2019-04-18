@@ -2,14 +2,16 @@ const Window = require('./_window');
 const ShutterOrder = require('./_shutterOrder');
 const ModelValidationError = require('./errors/ModelValidationError');
 
-export class Order {
+class Order {
     constructor(order) {
-        this.id = String(order.id || order._id);
+        this.id = order.id || order._id;
         this.customerId = String(order.customerId);
         this.window = new Window(order.window);
         this.comment = String(order.comment);
-        this.installationTime = order.installationTime;
+        this.installationTime = new Date(order.installationTime);
+        this.installer = order.installer;
         this.totalPrice = Number(order.totalPrice);
+        this.assembled = Boolean(order.assembled);
         this.invoicePaid = Boolean(order.invoicePaid);
         this.items = [];
 
@@ -28,3 +30,5 @@ export class Order {
         }
     }
 }
+
+module.exports = Order;

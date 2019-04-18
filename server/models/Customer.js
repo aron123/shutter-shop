@@ -1,6 +1,6 @@
 class Customer {
     constructor (customer) {
-        this.id = String(customer.id || customer._id);
+        this.id = customer.id || customer._id;
         this.name = String(customer.name);
         this.address = String(customer.address);
         this.mobile = String(customer.mobile);

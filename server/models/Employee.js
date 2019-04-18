@@ -8,7 +8,7 @@ class Employee {
             );
         }
 
-        this.id = String(employee.id || employee._id);
+        this.id = employee.id || employee._id;
         this.level = String(employee.level);
         this.name = String(employee.name);
         this.mobile = String(employee.mobile);

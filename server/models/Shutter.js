@@ -12,7 +12,8 @@ class Shutter {
             );
         }
 
-        this.id = String(shutter.id || shutter._id);
+        this.id = shutter.id || shutter._id;
+        this.name = String(shutter.name);
         this.material = String(shutter.material);
         this.parts = [];
 
