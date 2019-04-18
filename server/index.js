@@ -4,23 +4,30 @@ const database = require('./utils/database');
 const express = require('express');
 const app = express();
 
-// connect to mongo
 database.connectDb()
-    .then(() => console.log('Successfully connected to MongoDB.'))
-    .catch(err => console.error(err));
+    .then(() => {
+        console.log('Successfully connected to MongoDB.')
 
-// set up body parser
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+        // set up body parser
+        app.use(bodyParser.urlencoded({ extended: true }));
+        app.use(bodyParser.json());
 
-//set up api routes
-const apiRouter = express.Router();
-// TODO: map routes to central router:
-// apiRouter.use('/endpoint', require('./routes/endpoint'));
-//
-app.use('/api', apiRouter);
+        // set up api routes
+        const apiRouter = express.Router();
+        apiRouter.use('/order', require('./routes/order.routes'));
+        app.use('/api', apiRouter);
 
-// start server
-app.listen(serverConfig.port, serverConfig.host, () => {
-    console.log(`Server is listening on ${serverConfig.host}:${serverConfig.port} ...`);
-});
+        // serve static content in production
+        if (process.env.NODE_ENV === 'production') {
+            app.use(express.static('build'));
+        }
+
+        // start server
+        app.listen(serverConfig.port, serverConfig.host, () => {
+            console.log(`Server is listening on ${serverConfig.host}:${serverConfig.port} ...`);
+        });
+    })
+    .catch(err => {
+        console.error(err);
+    });
+
