@@ -23,10 +23,11 @@
     "sinon": "^7.3.2"
   },
   "scripts": {
-    "start": "echo \"No start script defined at the moment. For development, use: npm run start-dev\"",
+    "start": "NODE_ENV=production npm run build && npm run start-server",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
+    "start-server": "NODE_ENV=production node server",
     "start-frontend-dev": "react-scripts start",
     "start-server-dev": "nodemon server",
     "start-dev": "concurrently --kill-others-on-fail \"npm run start-server-dev\" \"npm run start-frontend-dev\""
