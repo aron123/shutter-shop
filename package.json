@@ -23,11 +23,13 @@
     "sinon": "^7.3.2"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "echo \"No start script defined at the moment. For development, use: npm run start-dev\"",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "start-server": "nodemon server"
+    "start-frontend-dev": "react-scripts start",
+    "start-server-dev": "nodemon server",
+    "start-dev": "concurrently --kill-others-on-fail \"npm run start-server-dev\" \"npm run start-frontend-dev\""
   },
   "eslintConfig": {
     "extends": "react-app"
