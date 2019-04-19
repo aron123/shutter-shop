@@ -4,6 +4,7 @@ const router = express.Router();
 const controller = require('../controllers/order.controller');
 
 router.get('/', controller.getAllOrders);
+router.get('/:id', controller.getOrderById);
 router.get('/customer/:id', controller.getOrdersOfCustomer);
 router.post('/', controller.addOrder);
 

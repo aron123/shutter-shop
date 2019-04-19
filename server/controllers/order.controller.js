@@ -28,16 +28,14 @@ const getOrdersOfCustomer = async (req, res) => {
     }
 };
 
-const addOrder = async (req, res) => {
+const getOrderById = async (req, res) => {
     try {
-        delete req.body.id;
-        delete req.body._id;
-
-        const result = await repository.createOrder(req.body);
-
-        handleResponse(res, { id: result.insertedId });
-    } catch {
-        handleError(res);
+        const order = await repository.getOrderById(req.params.id);
+        const result = handlers.sanitize(Order, order);
+        handlers.sendSuccessResponse(res, result);
+    } catch (err) {
+        console.error(err);
+        handlers.sendErrorResponse(res);
     }
 };
 
