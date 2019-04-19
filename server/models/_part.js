@@ -5,4 +5,6 @@ class Part {
     }
 }
 
-module.exports = Part;
+module.exports = {
+    Part
+};

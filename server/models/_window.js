@@ -5,4 +5,6 @@ class Window {
     }
 }
 
-module.exports = Window;
+module.exports = {
+    Window
+};

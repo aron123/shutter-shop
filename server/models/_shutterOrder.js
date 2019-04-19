@@ -1,4 +1,4 @@
-const Shutter = require('./Shutter');
+const Shutter = require('./Shutter').Shutter;
 
 class ShutterOrder {
     constructor (shutterOrder) {
@@ -7,4 +7,6 @@ class ShutterOrder {
     }
 }
 
-module.exports = ShutterOrder;
+module.exports = {
+    ShutterOrder
+};

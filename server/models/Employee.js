@@ -2,17 +2,28 @@ const ModelValidationError = require('./errors/ModelValidationError');
 
 class Employee {
     constructor (employee) {
-        if (employee.level !== 'WORKER' && employee.level !== 'MANAGER') {
-            throw new ModelValidationError(
-                `Invalid employee level, expected 'WORKER' or 'MANAGER', got: ${employee.level}`
-            );
-        }
+        
+        validateEmployee(employee);
 
         this.id = employee.id || employee._id;
         this.level = String(employee.level);
         this.name = String(employee.name);
-        this.mobile = String(employee.mobile);
+        this.mobile = employee.mobile ? String(employee.mobile) : employee.mobile;
     }
 }
 
-module.exports = Employee;
+function validateEmployee (employee) {
+    if (!employee.level || employee.level !== 'WORKER' && employee.level !== 'MANAGER') {
+        throw new ModelValidationError(
+            `Invalid employee level, expected 'WORKER' or 'MANAGER', got: ${employee.level}`
+        );
+    }
+
+    if (!employee.name) {
+        throw new ModelValidationError(`No name given for employee, got: ${employee.name}`);
+    }
+}
+
+module.exports = {
+    Employee
+};
