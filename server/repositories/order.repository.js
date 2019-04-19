@@ -31,21 +31,11 @@ const payInvoiceOfOrder = (id) => {
 };
 
 const setInstallation = (id, installation) => {
-    return collection.updateOne({ _id: new ObjectId(id) }, { 
-        $set: { 
-            installationTime: installation.installationTime,
-            installer: installation.installer
-        }
-    });
+    return collection.updateOne({ _id: new ObjectId(id) }, { $set: installation });
 };
 
 const setInvoice = (id, invoice) => {
-    return collection.updateOne({ _id: new ObjectId(id) }, { 
-        $set: { 
-            totalPrice: invoice.totalPrice,
-            invoicePaid: invoice.invoicePaid
-        }
-    });
+    return collection.updateOne({ _id: new ObjectId(id) }, { $set: invoice });
 };
 
 module.exports = {
