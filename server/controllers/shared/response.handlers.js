@@ -17,7 +17,7 @@ function sendErrorResponse (res) {
     });
 };
 
-function sendSuccessResponse (response, result) {
+function sendSuccessResponse (response, result = {}) {
     response.json({
         success: true,
         data: result

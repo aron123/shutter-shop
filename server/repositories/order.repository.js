@@ -18,9 +18,43 @@ const createOrder = (order) => {
     return collection.insertOne(order);
 };
 
+const assembleOrder = (id) => {
+    return collection.updateOne({ _id: new ObjectId(id) }, { 
+        $set: { assembled: true }
+    });
+}
+
+const payInvoiceOfOrder = (id) => {
+    return collection.updateOne({ _id: new ObjectId(id) }, { 
+        $set: { invoicePaid: true }
+    });
+};
+
+const setInstallation = (id, installation) => {
+    return collection.updateOne({ _id: new ObjectId(id) }, { 
+        $set: { 
+            installationTime: installation.installationTime,
+            installer: installation.installer
+        }
+    });
+};
+
+const setInvoice = (id, invoice) => {
+    return collection.updateOne({ _id: new ObjectId(id) }, { 
+        $set: { 
+            totalPrice: invoice.totalPrice,
+            invoicePaid: invoice.invoicePaid
+        }
+    });
+};
+
 module.exports = {
     getAllOrders,
     getOrdersOfCustomer,
     getOrderById,
-    createOrder
+    createOrder,
+    assembleOrder,
+    payInvoiceOfOrder,
+    setInstallation,
+    setInvoice
 };

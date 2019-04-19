@@ -1,7 +1,9 @@
 const handlers = require('./shared/response.handlers');
 
-const Order = require('../models/Order').Order;
-const InitialOrderByUser = require('../models/Order').InitialOrderByUser;
+const { Order } = require('../models/Order');
+const { InitialOrderByUser } = require('../models/Order');
+const { Installation } = require('../models/_installation');
+const { Invoice } = require('../models/_invoice');
 
 const shutterRepository = require('../repositories/shutter.repository');
 const repository = require('../repositories/order.repository');
@@ -58,9 +60,57 @@ const addOrder = async (req, res) => {
     }
 };
 
+const assembleOrder = async (req, res) => {
+    try {
+        await repository.assembleOrder(req.params.id);
+        handlers.sendSuccessResponse(res);
+    } catch (err) {
+        console.error(err);
+        handlers.sendErrorResponse(res);
+    }
+};
+
+const payInvoiceOfOrder = async (req, res) => {
+    try {
+        await repository.payInvoiceOfOrder(req.params.id);
+        handlers.sendSuccessResponse(res);
+    } catch (err) {
+        console.error(err);
+        handlers.sendErrorResponse(res);
+    }
+};
+
+const organizeInstallation = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const installation = new Installation(req.body);
+        await repository.setInstallation(id, installation);
+        handlers.sendSuccessResponse(res);
+    } catch (err) {
+        console.error(err);
+        handlers.sendErrorResponse(res);
+    }
+};
+
+const createInvoice = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const invoice = new Invoice(req.body);
+        await repository.setInvoice(id, invoice);
+        handlers.sendSuccessResponse(res);
+    } catch (err) {
+        console.error(err);
+        handlers.sendErrorResponse(res);
+    }
+};
+
 module.exports = {
     getAllOrders,
     getOrdersOfCustomer,
     getOrderById,
-    addOrder
+    addOrder,
+    assembleOrder,
+    payInvoiceOfOrder,
+    organizeInstallation,
+    createInvoice
 };
