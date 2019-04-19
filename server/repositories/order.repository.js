@@ -10,10 +10,11 @@ const getOrdersOfCustomer = (customerId) => {
 
 const createOrder = (order) => {
     return collection.insertOne(order);
-}
+};
 
 module.exports = {
     getAllOrders,
     getOrdersOfCustomer,
+    getOrderById,
     createOrder
 };
