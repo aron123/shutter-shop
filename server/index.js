@@ -15,6 +15,7 @@ database.connectDb()
         // set up api routes
         const apiRouter = express.Router();
         apiRouter.use('/order', require('./routes/order.routes'));
+        apiRouter.use('/customer', require('./routes/customer.routes'));
         app.use('/api', apiRouter);
 
         // serve static content in production
