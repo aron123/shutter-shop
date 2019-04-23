@@ -24,9 +24,10 @@
   },
   "scripts": {
     "start": "NODE_ENV=production npm run build && npm run start-server",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
+    "test": "mocha server/**/*.test.js",
+    "build-frontend": "react-scripts build",
+    "test-frontend": "react-scripts test",
+    "eject-frontend": "react-scripts eject",
     "start-server": "NODE_ENV=production node server",
     "start-frontend-dev": "react-scripts start",
     "start-server-dev": "nodemon server",
