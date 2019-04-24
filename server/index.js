@@ -15,6 +15,7 @@ database.connectDb()
         // set up api routes
         const apiRouter = express.Router();
         apiRouter.use('/order', require('./routes/order.routes'));
+        apiRouter.use('/shutter', require('./routes/shutter.routes'));
         apiRouter.use('/customer', require('./routes/customer.routes'));
         apiRouter.use('/employee', require('./routes/employee.routes'));
         apiRouter.use('/stats', require('./routes/stats.routes'));
