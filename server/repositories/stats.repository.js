@@ -45,7 +45,7 @@ const getTop5CustomerBySpentMoney = async () => {
 
     for (let item of results) {
         const customer = await customerRepository.getCustomerById(item._id);
-        item.label = `${customer.name} - ${item.value} $`;
+        item.label = `${customer.name}`;
     }
 
     return results;
@@ -69,7 +69,7 @@ const getTop5CustomerByOrderCount = async () => {
 
     for (let item of results) {
         const customer = await customerRepository.getCustomerById(item._id);
-        item.label = `${customer.name} - ${item.value} orders`;
+        item.label = `${customer.name}`;
     }
 
     return results;
