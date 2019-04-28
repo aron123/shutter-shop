@@ -34,6 +34,7 @@ class Statistics extends Component {
     }
 
     componentDidMount () {
+        // TODO: put fetching to stores
         apiFetcher.get('api/stats')
             .then(res => {
                 if (!res.success) {

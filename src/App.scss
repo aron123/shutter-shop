@@ -1,2 +1,11 @@
 @import '../node_modules/bootstrap/scss/bootstrap.scss';
 
+.spinner-border {
+    width: 4rem;
+    height: 4rem;
+}
+
+.tooltip {
+    // Bootstrap sets it to 0, so chart tooltips are invisible without this line
+    opacity: 1;
+}
