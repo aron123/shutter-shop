@@ -1,3 +1,5 @@
+/* eslint jsx-a11y/anchor-is-valid: 0 */
+
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
@@ -6,7 +8,7 @@ class Navbar extends Component {
         return (
             <nav className="navbar navbar-expand-lg navbar-light bg-light mb-3">
 
-                <a className="navbar-brand" href="#"><i class="fas fa-store"></i></a>
+                <a className="navbar-brand" href="#"><i class="fas fa-store text-primary"></i></a>
 
                 <button className="navbar-toggler" type="button" data-toggle="collapse" 
                         data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown"
