@@ -8,7 +8,7 @@ class Navbar extends Component {
         return (
             <nav className="navbar navbar-expand-lg navbar-light bg-light mb-3">
 
-                <a className="navbar-brand" href="#"><i class="fas fa-store text-primary"></i></a>
+                <a className="navbar-brand" href="#"><i className="fas fa-store text-primary"></i></a>
 
                 <button className="navbar-toggler" type="button" data-toggle="collapse" 
                         data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown"
@@ -26,7 +26,8 @@ class Navbar extends Component {
                                 Customer
                             </a>
                             <div className="dropdown-menu" aria-labelledby="navbarCustomerDropdown">
-                                <Link className="dropdown-item" to="/">... TODO</Link>
+                                <Link className="dropdown-item" to="/create-order">Create order</Link>
+                                <Link className="dropdown-item" to="/view-own-orders">View own orders</Link>
                             </div>
                         </li>
 
@@ -37,7 +38,7 @@ class Navbar extends Component {
                                 Worker
                             </a>
                             <div className="dropdown-menu" aria-labelledby="navbarWorkerDropdown">
-                                <Link className="dropdown-item" to="/">... TODO</Link>
+                                <Link className="dropdown-item" to="/worker-orders">Manage orders</Link>
                             </div>
                         </li>
 
@@ -48,6 +49,7 @@ class Navbar extends Component {
                                 Manager
                             </a>
                             <div className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                <Link className="dropdown-item" to="/manager-orders">Manage orders</Link>
                                 <Link className="dropdown-item" to="/statistics">Statistics</Link>
                             </div>
                         </li>
