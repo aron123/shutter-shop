@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import * as apiFetcher from '../services/api-fetcher';
+import * as StatisticsStore from '../stores/StatisticsStore';
 import Spinner from './Spinner';
 import { PieChart, BarChart } from 'react-d3-components';
 
@@ -34,25 +34,19 @@ class Statistics extends Component {
     }
 
     componentDidMount () {
-        // TODO: put fetching to stores
-        apiFetcher.get('api/stats')
-            .then(res => {
-                if (!res.success) {
-                    return console.error('Failed to fetch statistics, got:', res);
-                }
-                
-                const data = res.data;
-
-                this.setState({
-                    top5CustomerBySpendings: this.transformData(data.top5CustomerBySpentMoney),
-                    top5CustomerByOrderCount: this.transformData(data.top5CustomerByOrderCount),
-                    top5WorkerByInstallCount: this.transformData(data.top5WorkerByInstallationCount),
-                    ordersSum: data.ordersSum,
-                    notPaidOrdersSum: data.notPaidOrdersSum,
-                    notAssembledOrdersSum: data.notAssembledOrdersSum,
-                    orderPriceAvg: data.orderPriceAvg,
-                    loading: false
-                });
+        StatisticsStore.getStatistics()
+            .then(data => this.setState({
+                top5CustomerBySpendings: this.transformData(data.top5CustomerBySpentMoney),
+                top5CustomerByOrderCount: this.transformData(data.top5CustomerByOrderCount),
+                top5WorkerByInstallCount: this.transformData(data.top5WorkerByInstallationCount),
+                ordersSum: data.ordersSum,
+                notPaidOrdersSum: data.notPaidOrdersSum,
+                notAssembledOrdersSum: data.notAssembledOrdersSum,
+                orderPriceAvg: data.orderPriceAvg,
+                loading: false
+            }))
+            .catch(err => {
+                console.error('API call failed:', err);
             });
     }
 
