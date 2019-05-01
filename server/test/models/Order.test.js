@@ -4,9 +4,11 @@ const expect = chai.expect;
 const { Order } = require('../../models/Order');
 const ModelValidationError = require('../../models/errors/ModelValidationError');
 
-describe('server/models/Order.js', () => {
+describe('server/models/Order.js', function () {
     let orderData;
     let order;
+
+    this.timeout(10000);
 
     beforeEach(() => {
         orderData = {
@@ -36,7 +38,7 @@ describe('server/models/Order.js', () => {
             ]
         };
         order = new Order(orderData);
-    }, 10000);
+    });
     
     it('should set all fields properly if input is valid', () => {
         expect(order).to.deep.equal(orderData);
