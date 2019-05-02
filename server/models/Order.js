@@ -1,4 +1,3 @@
-const Window = require('./_window').Window;
 const ShutterOrder = require('./_shutterOrder').ShutterOrder;
 const ModelValidationError = require('./errors/ModelValidationError');
 
@@ -9,7 +8,6 @@ class Order {
 
         this.id = order.id || order._id;
         this.customerId = String(order.customerId);
-        this.window = new Window(order.window);
         this.comment = order.comment ? String(order.comment) : order.comment;
         this.installationTime = order.installationTime ? new Date(order.installationTime) : order.installationTime;
         this.installer = order.installer ? String(order.installer) : order.installer;
@@ -29,7 +27,6 @@ class InitialOrderByUser extends Order {
         super({
             id: undefined,
             customerId: order.customerId,
-            window: order.window,
             comment: order.comment,
             items: order.items,
             installationTime: null,
@@ -44,10 +41,6 @@ class InitialOrderByUser extends Order {
 function validateOrder (order) {
     if (!order.customerId) {
         throw new ModelValidationError(`No customerId is given for order, got: ${order.customerId}`);
-    }
-
-    if (!order.window) {
-        throw new ModelValidationError(`No window is given for order, got: ${order.window}`);
     }
 
     if (!order.items) {

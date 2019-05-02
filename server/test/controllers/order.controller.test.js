@@ -21,10 +21,6 @@ describe('server/controllers/order.controller.js', () => {
     beforeEach(() => {
         orderById = new Order({
             customerId: '5cb89bc3edcdb023a08ef0bd',
-            window: {
-                width: 660,
-                height: 150
-            },
             comment: null,
             installationTime: null,
             installer: '5cb897dfedcdb023a08ef0a4',
@@ -34,6 +30,7 @@ describe('server/controllers/order.controller.js', () => {
             items: [
                 {
                     pieces: 1,
+                    window: { width: 660, height: 150 },
                     shutter: {
                         name: "Bermuda ABS Shutter",
                         material: "METAL",
