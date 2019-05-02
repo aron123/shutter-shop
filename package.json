@@ -33,7 +33,7 @@
     "eject-frontend": "react-scripts eject",
     "start-server": "NODE_ENV=production node server",
     "start-frontend-dev": "react-scripts start",
-    "start-server-dev": "nodemon server",
+    "start-server-dev": "nodemon server --ignore src",
     "start-dev": "concurrently --kill-others-on-fail \"npm run start-server-dev\" \"npm run start-frontend-dev\""
   },
   "eslintConfig": {
