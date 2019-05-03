@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PayButton from './PayButton';
 
 class OrderDetails extends Component {
 
@@ -42,8 +43,16 @@ class OrderDetails extends Component {
                             </td>
                         </tr>
                         <tr>
-                            <td>Invoice paid:</td>
-                            <td>{this.props.order.invoicePaid ? this.successMark : this.failMark }</td>
+                            <td className="align-middle">Invoice paid:</td>
+                            <td>
+                                    <span>
+                                        {this.props.order.invoicePaid ? this.successMark : this.failMark}
+                                    </span>
+                                    <span className="ml-2">
+                                        {!this.props.order.invoicePaid && this.props.order.totalPrice 
+                                            ? <PayButton order={this.props.order} onOrderPaid={this.props.onOrderPaid} /> : ''}
+                                    </span>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
@@ -85,8 +94,8 @@ class OrderDetails extends Component {
                     </thead>
                     <tbody>
                         {
-                            this.props.order.items.map(item =>
-                                <tr>
+                            this.props.order.items.map((item, index) =>
+                                <tr key={index}>
                                     <td>{item.pieces}×</td>
                                     <td>{item.window.width} cm × {item.window.height} cm</td>
                                     <td>{item.shutter.name} ({item.shutter.material})</td>

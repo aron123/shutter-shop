@@ -26,8 +26,8 @@ class CustomerOrderList extends Component {
                 {
                     this.props.orders.map(order => {
                         return (
-                            <div key={order.id} className="card">
-                                <div className="card-header p-0 mb-2" id={`heading-${order.id}`}>
+                            <div key={order.id} className="card mb-2">
+                                <div className="card-header p-0" id={`heading-${order.id}`}>
                                         <button className="btn btn-link" 
                                             data-toggle="collapse" data-target={`#collapse-${order.id}`} 
                                             aria-expanded="true" aria-controls={`collapse-${order.id}`}
@@ -45,18 +45,19 @@ class CustomerOrderList extends Component {
                                 >
                                     <div className="card-body">
                                         <div className="container">
-                                        <div className="row">
-                                            <div className="col">
-                                                <BillingDetails customer={this.props.customer} />
+                                            <div className="row">
+                                                <div className="col">
+                                                    <BillingDetails customer={this.props.customer} />
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div className="row">
-                                            <div className="col">
-                                                <OrderDetails 
-                                                    order={order}
-                                                    workers={this.props.workers} />
+                                            <div className="row">
+                                                <div className="col">
+                                                    <OrderDetails 
+                                                        order={order}
+                                                        workers={this.props.workers}
+                                                        onOrderPaid={this.props.onOrderPaid} />
+                                                </div>
                                             </div>
-                                        </div>
                                         </div>
                                     </div>
                                 </div>

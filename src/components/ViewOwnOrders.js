@@ -30,6 +30,20 @@ class ViewOwnOrders extends Component {
             .then(selectedCustomer => this.setState({ selectedCustomer }));
     }
 
+    onOrderPaid = (orderId) => {
+        this.setState(state => {
+            const orders = state.orders.map(order => {
+                if (order.id === orderId) {
+                    order.invoicePaid = true;
+                }
+
+                return order;
+            });
+
+            return { orders };
+        });
+    }
+
     render () {
         return (
             <div className="container">
@@ -59,7 +73,8 @@ class ViewOwnOrders extends Component {
                         <CustomerOrderList 
                             orders={this.state.orders}
                             workers={this.state.workers}
-                            customer={this.state.selectedCustomer} />
+                            customer={this.state.selectedCustomer}
+                            onOrderPaid={this.onOrderPaid} />
                     </div>
                 </div>
             </div>

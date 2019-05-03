@@ -7,3 +7,7 @@ export const getOrders = () => {
 export const getOrderByCustomer = (customerId) => {
     return apiFetcher.get(`/api/order/customer/${customerId}`);
 };
+
+export const payOrder = (orderId) => {
+    return apiFetcher.post(`/api/order/${orderId}/pay`);
+}
