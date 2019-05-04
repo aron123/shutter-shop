@@ -11,7 +11,7 @@ function sanitize (type, result) {
 }
 
 function sendErrorResponse (res) {
-    res.status(401).json({
+    res.status(500).json({
         success: false,
         message: 'Server error occured.'
     });
