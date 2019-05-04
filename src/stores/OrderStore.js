@@ -15,3 +15,7 @@ export const createOrder = (order) => {
 export const payOrder = (orderId) => {
     return apiFetcher.post(`/api/order/${orderId}/pay`);
 };
+
+export const assembleOrder = (orderId) => {
+    return apiFetcher.post(`/api/order/${orderId}/assemble`);
+}
