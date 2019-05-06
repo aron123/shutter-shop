@@ -1,13 +1,26 @@
-import * as apiFetcher from '../utils/api-fetcher';
+import EventEmitter from 'events'
 
-export const getCustomers = () => {
-    return apiFetcher.get('/api/customer');
-};
+class CustomerStore extends EventEmitter {
 
-export const getCustomerById = (id) => {
-    return apiFetcher.get(`/api/customer/${id}`);
+    _customer = null;
+    _customers = [];
+    _isSaveSucceeded = null;
+
+    reset () {
+        _isSaveSucceeded = null;
+    }
+
+    emitChange () {
+        this.emit('change');
+    }
+
+    addChangeListener (callback) {
+        this.on('change', callback);
+    }
+
+    removeChangeListener (callback) {
+        this.removeListener('change', callback);
+    }
 }
 
-export const registerCustomer = (customer) => {
-    return apiFetcher.post('/api/customer', customer);
-}
+export default new CustomerStore();

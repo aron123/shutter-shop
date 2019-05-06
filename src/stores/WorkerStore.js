@@ -1,9 +1,21 @@
-import * as apiFetcher from '../utils/api-fetcher';
+import EventEmitter from 'events'
 
-export const getAllWorkers = () => {
-    return apiFetcher.get('/api/employee');
+class WorkerStore extends EventEmitter {
+
+    _worker = null;
+    _workers = [];
+
+    emitChange () {
+        this.emit('change');
+    }
+
+    addChangeListener (callback) {
+        this.on('change', callback);
+    }
+
+    removeChangeListener (callback) {
+        this.removeListener('change', callback);
+    }
 }
 
-export const getWorkerById = (workerId) => {
-    return apiFetcher.get(`/api/employee/${workerId}`);
-};
+export default new WorkerStore();

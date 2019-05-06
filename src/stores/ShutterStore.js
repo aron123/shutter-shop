@@ -1,5 +1,20 @@
-import * as apiFetcher from '../utils/api-fetcher';
+import EventEmitter from 'events'
 
-export const getShutters = () => {
-    return apiFetcher.get('/api/shutter');
-};
+class ShutterStore extends EventEmitter {
+
+    _shutters = [];
+
+    emitChange () {
+        this.emit('change');
+    }
+
+    addChangeListener (callback) {
+        this.on('change', callback);
+    }
+
+    removeChangeListener (callback) {
+        this.removeListener('change', callback);
+    }
+}
+
+export default new ShutterStore();

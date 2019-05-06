@@ -1,21 +1,54 @@
-import * as apiFetcher from '../utils/api-fetcher';
+import EventEmitter from 'events'
 
-export const getOrders = () => {
-    return apiFetcher.get('/api/order');
-};
+class OrderStore extends EventEmitter {
 
-export const getOrderByCustomer = (customerId) => {
-    return apiFetcher.get(`/api/order/customer/${customerId}`);
-};
+    _orders = [];
+    _filteredOrders = [];
+    _isOrderCreated = null;
 
-export const createOrder = (order) => {
-    return apiFetcher.post('/api/order', order);
+    reset () {
+        _isOrderCreated = null;
+    }
+
+    setOrderPaid (orderId) {
+        _orders.map(order => {
+            if (order.id === orderId) {
+                order.invoicePaid = true;
+            }
+        });
+
+        _filteredOrders.map(order => {
+            if (order.id === orderId) {
+                order.invoicePaid = true;
+            }
+        });
+    }
+
+    setOrderAssembled (orderId) {
+        _orders.map(order => {
+            if (order.id === orderId) {
+                order.assembled = true;
+            }
+        });
+
+        _filteredOrders.map(order => {
+            if (order.id === orderId) {
+                order.assembled = true;
+            }
+        });
+    }
+
+    emitChange () {
+        this.emit('change');
+    }
+
+    addChangeListener (callback) {
+        this.on('change', callback);
+    }
+
+    removeChangeListener (callback) {
+        this.removeListener('change', callback);
+    }
 }
 
-export const payOrder = (orderId) => {
-    return apiFetcher.post(`/api/order/${orderId}/pay`);
-};
-
-export const assembleOrder = (orderId) => {
-    return apiFetcher.post(`/api/order/${orderId}/assemble`);
-}
+export default new OrderStore();
