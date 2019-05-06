@@ -1,0 +1,7 @@
+{"_id":{"$oid":"5cb897dfedcdb023a08ef0a1"},"level":"MANAGER","name":"John Smith","mobile":"754-3010"}
+{"_id":{"$oid":"5cb897dfedcdb023a08ef0a2"},"level":"MANAGER","name":"Albert Einstein","mobile":"(541) 754-3010"}
+{"_id":{"$oid":"5cb897dfedcdb023a08ef0a3"},"level":"WORKER","name":"Marie Curie","mobile":"+1-541-754-3010"}
+{"_id":{"$oid":"5cb897dfedcdb023a08ef0a4"},"level":"WORKER","name":"Max Planck","mobile":"(089) / 636-48018"}
+{"_id":{"$oid":"5cb897dfedcdb023a08ef0a5"},"level":"WORKER","name":"Niels Bohr","mobile":"+49-89-636-48018"}
+{"_id":{"$oid":"5cb897dfedcdb023a08ef0a6"},"level":"WORKER","name":"Sir Isaac Newton","mobile":"19-49-89-636-48018"}
+{"_id":{"$oid":"5cb897dfedcdb023a08ef0a7"},"level":"WORKER","name":"Stephen Hawking","mobile":"001-541-754-3010"}

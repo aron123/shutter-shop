@@ -1,0 +1,10 @@
+{"_id":{"$oid":"5cb89bc3edcdb023a08ef0bc"},"name":"Charles Babbage","address":"34 Cypress Lane Shelbyville, TN 37160","mobile":"716-456-8440","userName":"babbage"}
+{"_id":{"$oid":"5cb89bc3edcdb023a08ef0bd"},"name":"Neumann János","address":"8257 E. School St. Cornelius, NC 28031","mobile":"256-746-2660","userName":"neumann"}
+{"_id":{"$oid":"5cb89bc3edcdb023a08ef0be"},"name":"Ada Lovelace","address":"7776 High Ridge St. Toms River, NJ 08753","mobile":"510-532-1367","userName":"lovelace"}
+{"_id":{"$oid":"5cb89bc3edcdb023a08ef0bf"},"name":"Alan Turing","address":"947 Adams Street Valley Stream, NY 11580","mobile":"757-971-4596","userName":"turing"}
+{"_id":{"$oid":"5cb89bc3edcdb023a08ef0c0"},"name":"Bill Gates","address":"3 SE. Del Monte Drive Olney, MD 20832","mobile":"708-930-8580","userName":"BlueScreenOfDeath"}
+{"_id":{"$oid":"5cb89bc3edcdb023a08ef0c1"},"name":"Sergey Brin","address":"144 St Margarets Street Sebastian, FL 32958","mobile":"708-944-5387","userName":"brin"}
+{"_id":{"$oid":"5cb89bc3edcdb023a08ef0c2"},"name":"Andy Grove","address":"364 Old Glen Creek Drive Lawndale, CA 90260","mobile":"925-516-3136","userName":"grove"}
+{"_id":{"$oid":"5cb89bc3edcdb023a08ef0c3"},"name":"Edsger Dijkstra","address":"410 Snake Hill Dr. Duluth, GA 30096","mobile":"443-354-4178","userName":"dijkstra"}
+{"_id":{"$oid":"5cb89bc3edcdb023a08ef0c4"},"name":"Whitfield Diffie","address":"10 Jefferson Dr. North Miami Beach, FL 33160","mobile":"540-458-4454","userName":"diffie"}
+{"_id":{"$oid":"5cb89bc3edcdb023a08ef0c5"},"name":"Martin Hellman","address":"26 E. Ocean St. Manchester Township, NJ 08759","mobile":"907-341-9552","userName":"hellman"}
