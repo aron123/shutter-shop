@@ -5,7 +5,7 @@ class OrderItem extends Component {
 
     onItemChange = (event, key, innerKey) => {
         const value = event.target.value;
-        let item = this.props.item;
+        let item = Object.assign({}, this.props.item);
 
         if (innerKey) {
             item[key][innerKey] = value;
@@ -14,14 +14,6 @@ class OrderItem extends Component {
         }
 
         this.props.onItemChange(item, this.props.index);
-    }
-
-    getDefaultShutterId () {
-        if (!this.props.shutters | !Array.isArray(this.props.shutters) || this.props.shutters.length < 1) {
-            return '';
-        }
-
-        return this.props.shutters[0].id;
     }
 
     render () {

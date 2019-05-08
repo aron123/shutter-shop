@@ -1,47 +1,70 @@
 import React, { Component } from 'react';
-import * as CustomerStore from '../stores/CustomerStore';
-import * as ShutterStore from '../stores/ShutterStore';
+import CustomerStore from '../stores/CustomerStore';
+import CustomerActions from '../actions/CustomerActions';
+import ShutterStore from '../stores/ShutterStore';
+import ShutterActions from '../actions/ShutterActions';
+import OrderStore from '../stores/OrderStore';
+import OrderActions from '../actions/OrderActions';
+
 import OrderItem from './OrderItem';
-import * as OrderStore from '../stores/OrderStore';
 import OrderSuccessModal from './OrderSuccessModal';
-import $ from 'jquery'; 
+import $ from 'jquery'; // for showing modal
 
-const NEW_CUSTOMER_KEY = "newcustomer";
-
-const DEFAULT_ORDER_ITEM = () => {
-    return {
-        pieces: 1,
-        window: {
-            width: 1,
-            height: 1
-        },
-        shutter: ''
-    };
-};
+const NEW_CUSTOMER_KEY = 'newcustomer';
 
 class CreateOrder extends Component {
 
     constructor (props) {
         super(props);
+
+        OrderActions.initializeOrder();
+        CustomerActions.initializeCustomerStore();
+
+        CustomerActions.getCustomers();
+        ShutterActions.getShutters();
+
+        this._onChange = this._onChange.bind(this);
+        
         this.state = {
             showOrderPanel: false,
-            customers: [],
-            selectedCustomer: null,
-            shutters: [],
-            order: {
-                customerId: null,
-                comment: null,
-                items: [ new DEFAULT_ORDER_ITEM() ]
-            },
-            orderSuccess: false
-        }
+            customers: CustomerStore._customers,
+            selectedCustomer: CustomerStore._customer,
+            shutters: ShutterStore._shutters,
+            order: OrderStore._orderToCreate,
+            orderSuccess: OrderStore._isOrderCreated
+        };
     }
 
     componentDidMount () {
-        CustomerStore.getCustomers()
-            .then(customers => this.setState({ customers }));
-        ShutterStore.getShutters()
-            .then(shutters => this.setState({ shutters }));
+        OrderStore.addChangeListener(this._onChange);
+        ShutterStore.addChangeListener(this._onChange);
+        CustomerStore.addChangeListener(this._onChange);
+    }
+
+    componentWillUnmount () {
+        OrderStore.removeChangeListener(this._onChange);
+        ShutterStore.removeChangeListener(this._onChange);
+        CustomerStore.removeChangeListener(this._onChange);
+    }
+
+    componentDidUpdate (prevProps, prevState) {
+        if (prevState.orderSuccess === this.state.orderSuccess 
+                || this.state.orderSuccess === null
+                || this.state.orderSuccess === undefined) {
+            return;
+        }
+
+        $('#order-success-modal').modal('show');
+    }
+
+    _onChange () {
+        this.setState({
+            customers: CustomerStore._customers,
+            selectedCustomer: CustomerStore._customer,
+            shutters: ShutterStore._shutters,
+            order: OrderStore._orderToCreate,
+            orderSuccess: OrderStore._isOrderCreated
+        });
     }
 
     getCustomerData (id) {
@@ -56,59 +79,35 @@ class CreateOrder extends Component {
         const customerId = event.target.value === NEW_CUSTOMER_KEY ? null : event.target.value;
         const order = this.state.order;
         order.customerId = customerId;
-
-        this.setState({
-            selectedCustomer: this.getCustomerData(customerId),
-            order
-        });
+        CustomerActions.changeSelectedCustomer(this.getCustomerData(customerId));
+        OrderActions.changeOrder(order);
     }
 
     onCustomerDataChanged = (event, key) => {
         const value = event.target.value;
-        let selectedCustomer = this.state.selectedCustomer || {};
+        let selectedCustomer = Object.assign({}, this.state.selectedCustomer);
         selectedCustomer[key] = value;
-        this.setState({ selectedCustomer });
+
+        CustomerActions.changeSelectedCustomer(selectedCustomer);
     }
 
     onCustomerFilled = () => {
         if (!this.state.order.customerId) {
-            return CustomerStore.registerCustomer(this.state.selectedCustomer)
-                .then(data => {
-                    let order = this.state.order;
-                    order.customerId = data.id;
-                    this.setState({ 
-                        order,
-                        showOrderPanel: true
-                    });
-                });
+            CustomerActions.registerCustomer(this.state.selectedCustomer);
         }
 
         this.setState({ showOrderPanel: true });
     }
 
-    onOrderItemChanged = (itemToAdd, index) => {
-        let order = this.state.order;
-        order.items[index] = itemToAdd;
-        this.setState({ order });
+    onOrderItemChanged = (item, index) => {
+        OrderActions.changeOrderItem({ index, item });
     };
 
-    addNewItem = () => {
-        let order = this.state.order;
-        order.items.push(new DEFAULT_ORDER_ITEM());
-        this.setState({ order });
-    }
-
     placeOrder = () => {
-        OrderStore.createOrder(this.state.order)
-            .then(res => {
-                this.setState({ orderSuccess: true });
-                $('#order-success-modal').modal('show');
-            })
-            .catch(err => {
-                this.setState({ orderSuccess: false });
-                $('#order-success-modal').modal('show');
-            });
-    }
+        let order = this.state.order;
+        order.customerId = this.state.selectedCustomer ? this.state.selectedCustomer.id : null;
+        OrderActions.createOrder(this.state.order);
+    };
 
     render () {
         return (
@@ -135,7 +134,7 @@ class CreateOrder extends Component {
                         <div className="form-group row">
                             <label htmlFor="name" className="col-sm-2">Name:</label>
                             <div className="col-sm-10">
-                                <input type="text" className="form-control" id="name" disabled={this.state.order.customerId}
+                                <input type="text" className="form-control" id="name" disabled={this.state.showOrderPanel}
                                     value={this.state.selectedCustomer ? this.state.selectedCustomer.name : ''}
                                     onChange={(e) => this.onCustomerDataChanged(e, 'name')}></input>
                             </div>
@@ -143,7 +142,7 @@ class CreateOrder extends Component {
                         <div className="form-group row">
                             <label htmlFor="address" className="col-sm-2">Address:</label>
                             <div className="col-sm-10">
-                                <input type="text" className="form-control" id="address" disabled={this.state.order.customerId}
+                                <input type="text" className="form-control" id="address" disabled={this.state.showOrderPanel}
                                     value={this.state.selectedCustomer ? this.state.selectedCustomer.address : ''}
                                     onChange={(e) => this.onCustomerDataChanged(e, 'address')}></input>
                             </div>
@@ -151,7 +150,7 @@ class CreateOrder extends Component {
                         <div className="form-group row">
                             <label htmlFor="mobile" className="col-sm-2">Mobile:</label>
                             <div className="col-sm-10">
-                                <input type="text" className="form-control" id="mobile" disabled={this.state.order.customerId}
+                                <input type="text" className="form-control" id="mobile" disabled={this.state.showOrderPanel}
                                     value={this.state.selectedCustomer ? this.state.selectedCustomer.mobile : ''}
                                     onChange={(e) => this.onCustomerDataChanged(e, 'mobile')}></input>
                             </div>
@@ -159,7 +158,7 @@ class CreateOrder extends Component {
                         <div className="form-group row">
                             <label htmlFor="username" className="col-sm-2">Username:</label>
                             <div className="col-sm-10">
-                                <input type="text" className="form-control" id="username" disabled={this.state.order.customerId}
+                                <input type="text" className="form-control" id="username" disabled={this.state.showOrderPanel}
                                     value={this.state.selectedCustomer ? this.state.selectedCustomer.userName : ''}
                                     onChange={(e) => this.onCustomerDataChanged(e, 'userName')}></input>
                             </div>
@@ -180,7 +179,7 @@ class CreateOrder extends Component {
                     </div>
                     <div className="row justify-content-center">
                         <div className="col-md-9 text-center">
-                            <button className="btn btn-primary mt-2 mb-2 text-bold" onClick={this.addNewItem}>+</button>
+                            <button className="btn btn-primary mt-2 mb-2 text-bold" onClick={OrderActions.addDefaultItemToCart}>+</button>
                         </div>
                     </div>
                     <div className="row justify-content-center">

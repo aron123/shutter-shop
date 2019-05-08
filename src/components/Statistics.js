@@ -1,55 +1,37 @@
 import React, { Component } from 'react';
-import * as StatisticsStore from '../stores/StatisticsStore';
 import Spinner from './Spinner';
 import { PieChart, BarChart } from 'react-d3-components';
+import StatisticsStore from '../stores/StatisticsStore';
+import StatisticsActions from '../actions/StatisticsActions';
 
 class Statistics extends Component {
     constructor (props) {
         super(props);
+
+        StatisticsActions.getStatistics();
+        this._onChange = this._onChange.bind(this);
+
         this.state = {
             loading: true,
-            top5CustomerBySpendings: [],
-            top5CustomerByOrderCount: [],
-            top5WorkerByInstallCount: [],
-            ordersSum: 0,
-            notPaidOrdersSum: 0,
-            notAssembledOrdersSum: 0,
-            orderPriceAvg: 0
+            statistics: StatisticsStore._statistics
         };
-    }
-
-    transformData (raw) {
-        let data = {
-            values: []
-        };
-    
-        for (const item of raw) {
-            data.values.push({
-                x: item.label,
-                y: item.value
-            });
-        }
-    
-        return data;
     }
 
     componentDidMount () {
-        StatisticsStore.getStatistics()
-            .then(data => this.setState({
-                top5CustomerBySpendings: this.transformData(data.top5CustomerBySpentMoney),
-                top5CustomerByOrderCount: this.transformData(data.top5CustomerByOrderCount),
-                top5WorkerByInstallCount: this.transformData(data.top5WorkerByInstallationCount),
-                ordersSum: data.ordersSum,
-                notPaidOrdersSum: data.notPaidOrdersSum,
-                notAssembledOrdersSum: data.notAssembledOrdersSum,
-                orderPriceAvg: data.orderPriceAvg,
-                loading: false
-            }))
-            .catch(err => {
-                console.error('API call failed:', err);
-            });
+        StatisticsStore.addChangeListener(this._onChange);
     }
 
+    componentWillUnmount () {
+        StatisticsStore.removeChangeListener(this._onChange);
+    }
+
+    _onChange () {
+        this.setState({
+            statistics: StatisticsStore._statistics,
+            loading: false
+        });
+    }
+    
     spendingTooltip (x, y) {
         return `${y} $`;
     }
@@ -73,7 +55,7 @@ class Statistics extends Component {
                     <div className="col-md-6">
                         <h4>Top 5 customer by spent money</h4>
                         <hr></hr>
-                        <PieChart data={this.state.top5CustomerBySpendings}
+                        <PieChart data={this.state.statistics.top5CustomerBySpendings}
                             width={600} height={300} margin={{top: 10, bottom: 50, left: 50, right: 10}} 
                             tooltipHtml={this.spendingTooltip} tooltipOffset={{ top: 30, left: 30 }}
                             tooltipMode='mouse' />
@@ -81,7 +63,7 @@ class Statistics extends Component {
                     <div className="col-md-6">
                         <h4>Top 5 customer by order count</h4>
                         <hr></hr>
-                        <BarChart data={this.state.top5CustomerByOrderCount}
+                        <BarChart data={this.state.statistics.top5CustomerByOrderCount}
                             width={600} height={300} margin={{top: 10, bottom: 50, left: 50, right: 10}}
                             tooltipHtml={this.ordersTooltip} tooltipOffset={{ top: 30, left: 30 }}
                             tooltipMode='mouse'  />
@@ -91,7 +73,7 @@ class Statistics extends Component {
                     <div className="col-md-6">
                         <h4>Top 5 worker by installation count</h4>
                         <hr></hr>
-                        <BarChart data={this.state.top5WorkerByInstallCount}
+                        <BarChart data={this.state.statistics.top5WorkerByInstallCount}
                             width={600} height={300} margin={{top: 10, bottom: 50, left: 50, right: 10}}
                             tooltipHtml={this.installationsTooltip} tooltipOffset={{ top: 30, left: 30 }}
                             tooltipMode='mouse'  />
@@ -103,19 +85,19 @@ class Statistics extends Component {
                             <tbody>
                                 <tr>
                                     <td># of orders:</td>
-                                    <td>{this.state.ordersSum}</td>
+                                    <td>{this.state.statistics.ordersSum}</td>
                                 </tr>
                                 <tr>
                                     <td># of not paid orders:</td>
-                                    <td>{this.state.notPaidOrdersSum}</td>
+                                    <td>{this.state.statistics.notPaidOrdersSum}</td>
                                 </tr>
                                 <tr>
                                     <td># of not assembled orders:</td>
-                                    <td>{this.state.notAssembledOrdersSum}</td>
+                                    <td>{this.state.statistics.notAssembledOrdersSum}</td>
                                 </tr>
                                 <tr>
                                     <td>Average order price:</td>
-                                    <td>{`${this.state.orderPriceAvg.toFixed(2)} $`}</td>
+                                    <td>{`${this.state.statistics.orderPriceAvg.toFixed(2)} $`}</td>
                                 </tr> 
                             </tbody>
                         </table>

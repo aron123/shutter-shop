@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import * as OrderStore from '../stores/OrderStore';
+import OrderActions from '../actions/OrderActions';
 
 class PayButton extends Component {
     constructor (props) {
@@ -11,16 +11,9 @@ class PayButton extends Component {
     }
 
     startPayment = () => {
-        const orderId = this.props.order.id;
-
         this.setState({ loading: true });
-        
-        OrderStore.payOrder(orderId)
-            .then(() => {
-                this.setState({ completed: true });
-                this.props.onOrderPaid(orderId);
-            })
-            .catch((err) => console.log(err));
+        OrderActions.payOrder(this.props.order.id);
+        this.setState({ loading: false });
     }
 
     render () {

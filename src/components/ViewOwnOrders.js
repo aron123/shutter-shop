@@ -1,47 +1,55 @@
 import React, { Component } from 'react';
-import * as CustomerStore from '../stores/CustomerStore';
-import * as OrderStore from '../stores/OrderStore';
-import * as WorkerStore from '../stores/WorkerStore';
+
+import CustomerStore from '../stores/CustomerStore';
+import OrderStore from '../stores/OrderStore';
+import WorkerStore from '../stores/WorkerStore';
+
+import CustomerActions from '../actions/CustomerActions';
+import OrderActions from '../actions/OrderActions';
+import WorkerActions from '../actions/WorkerActions';
+
 import CustomerOrderList from './CustomerOrderList';
 
 class ViewOwnOrders extends Component {
 
     constructor (props) {
         super(props);
+
+        CustomerActions.getCustomers();
+        WorkerActions.getWorkers();
+        this._onChange = this._onChange.bind(this);
         this.state = {
-            customers: [],
-            workers: [],
+            customers: CustomerStore._customers,
+            workers: WorkerStore._workers,
             selectedCustomer: {},
-            orders: []
+            orders: OrderStore._filteredOrders
         };
     }
 
     componentDidMount () {
-        CustomerStore.getCustomers()
-            .then(customers => this.setState({ customers }));
-        WorkerStore.getAllWorkers()
-            .then(workers => this.setState({ workers }));
+        CustomerStore.addChangeListener(this._onChange);
+        OrderStore.addChangeListener(this._onChange);
+        WorkerStore.addChangeListener(this._onChange);
+    }
+
+    componentWillUnmount () {
+        CustomerStore.removeChangeListener(this._onChange);
+        OrderStore.removeChangeListener(this._onChange);
+        WorkerStore.removeChangeListener(this._onChange);
+    }
+
+    _onChange () {
+        this.setState({
+            customers: CustomerStore._customers,
+            workers: WorkerStore._workers,
+            selectedCustomer: CustomerStore._customer || {},
+            orders: OrderStore._filteredOrders
+        });
     }
 
     loadOrdersOfCustomer (customerId) {
-        OrderStore.getOrderByCustomer(customerId)
-            .then(orders => this.setState({ orders }));
-        CustomerStore.getCustomerById(customerId)
-            .then(selectedCustomer => this.setState({ selectedCustomer }));
-    }
-
-    onOrderPaid = (orderId) => {
-        this.setState(state => {
-            const orders = state.orders.map(order => {
-                if (order.id === orderId) {
-                    order.invoicePaid = true;
-                }
-
-                return order;
-            });
-
-            return { orders };
-        });
+        OrderActions.getOrdersByCustomer(customerId);
+        CustomerActions.getCustomerById(customerId);
     }
 
     render () {
@@ -73,8 +81,7 @@ class ViewOwnOrders extends Component {
                         <CustomerOrderList 
                             orders={this.state.orders}
                             workers={this.state.workers}
-                            customer={this.state.selectedCustomer}
-                            onOrderPaid={this.onOrderPaid} />
+                            customer={this.state.selectedCustomer} />
                     </div>
                 </div>
             </div>

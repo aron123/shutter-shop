@@ -1,17 +1,29 @@
 import React, { Component } from 'react';
-import * as OrderStore from '../stores/OrderStore';
+import OrderStore from '../stores/OrderStore';
+import OrderActions from '../actions/OrderActions';
 
 class ManageOrdersByWorker extends Component {
 
     constructor (props) {
         super(props);
+
+        OrderActions.getOrders();
+        this._onChange = this._onChange.bind(this);
         this.state = {
-            orders: []
-        }
+            orders: OrderStore._orders
+        };
     }
 
     componentDidMount () {
-        OrderStore.getOrders().then(orders => this.setState({ orders }));
+        OrderStore.addChangeListener(this._onChange);
+    }
+
+    componentWillUnmount () {
+        OrderStore.removeChangeListener(this._onChange);
+    }
+
+    _onChange () {
+        this.setState({ orders: OrderStore._orders });
     }
 
     getPartListHTML = (shutter) => {
@@ -39,20 +51,7 @@ class ManageOrdersByWorker extends Component {
     }
 
     assembleOrder = (order) => {
-        const orderId = order.id;
-
-        OrderStore.assembleOrder(orderId)
-            .then(() => {
-                let orders = this.state.orders.map(order => {
-                    if (order.id === orderId) {
-                        order.assembled = true;
-                    }
-                    
-                    return order;
-                });
-
-                this.setState({ orders });
-            });
+        OrderActions.assembleOrder(order.id);
     }
 
     render () {

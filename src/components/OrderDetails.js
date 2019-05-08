@@ -50,7 +50,7 @@ class OrderDetails extends Component {
                                     </span>
                                     <span className="ml-2">
                                         {!this.props.order.invoicePaid && this.props.order.totalPrice 
-                                            ? <PayButton order={this.props.order} onOrderPaid={this.props.onOrderPaid} /> : ''}
+                                            ? <PayButton order={this.props.order} /> : ''}
                                     </span>
                             </td>
                         </tr>

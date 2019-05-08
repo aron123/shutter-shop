@@ -54,8 +54,7 @@ class CustomerOrderList extends Component {
                                                 <div className="col">
                                                     <OrderDetails 
                                                         order={order}
-                                                        workers={this.props.workers}
-                                                        onOrderPaid={this.props.onOrderPaid} />
+                                                        workers={this.props.workers} />
                                                 </div>
                                             </div>
                                         </div>
