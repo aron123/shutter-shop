@@ -28,6 +28,14 @@ class OrderDetails extends Component {
         return worker ? `${worker.name} (${worker.mobile})` : 'N/A';
     }
 
+    formatDateString (dateString) {
+        if (typeof dateString !== 'string') {
+            return;
+        }
+
+        return dateString.replace('T', ' ').replace('Z', '').split('.')[0];
+    }
+
     render () {
         return (
             <div className="order-details">
@@ -77,7 +85,11 @@ class OrderDetails extends Component {
                         <tr>
                             <td>Install time:</td>
                             <td>
-                                {this.props.order.installationTime ? this.props.order.installationTime : this.questionMark}
+                            {
+                                this.props.order.installationTime
+                                    ? this.formatDateString(this.props.order.installationTime)
+                                    : this.questionMark
+                            }
                             </td>
                         </tr>
                     </tbody>
