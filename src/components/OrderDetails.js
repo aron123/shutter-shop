@@ -49,7 +49,7 @@ class OrderDetails extends Component {
                                         {this.props.order.invoicePaid ? this.successMark : this.failMark}
                                     </span>
                                     <span className="ml-2">
-                                        {!this.props.order.invoicePaid && this.props.order.totalPrice 
+                                        {!this.props.order.invoicePaid && this.props.order.totalPrice && this.props.customerControls
                                             ? <PayButton order={this.props.order} /> : ''}
                                     </span>
                             </td>
@@ -67,11 +67,11 @@ class OrderDetails extends Component {
                         <tr>
                             <td>Installer:</td>
                             <td>
-                                {
-                                    this.props.order.installer
-                                        ? this.getWorkerText(this.props.order.installer)
-                                        : this.questionMark
-                                }
+                            {
+                                this.props.order.installer
+                                    ? this.getWorkerText(this.props.order.installer)
+                                    : this.questionMark
+                            }
                             </td>
                         </tr>
                         <tr>
@@ -93,15 +93,15 @@ class OrderDetails extends Component {
                         </tr>
                     </thead>
                     <tbody>
-                        {
-                            this.props.order.items.map((item, index) =>
-                                <tr key={index}>
-                                    <td>{item.pieces}×</td>
-                                    <td>{item.window.width} cm × {item.window.height} cm</td>
-                                    <td>{item.shutter.name} ({item.shutter.material})</td>
-                                </tr>
-                            )
-                        }
+                    {
+                        this.props.order.items.map((item, index) =>
+                            <tr key={index}>
+                                <td>{item.pieces}×</td>
+                                <td>{item.window.width} cm × {item.window.height} cm</td>
+                                <td>{item.shutter.name} ({item.shutter.material})</td>
+                            </tr>
+                        )
+                    }
                     </tbody>
                 </table>
             </div>

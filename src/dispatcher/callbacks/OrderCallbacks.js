@@ -8,7 +8,9 @@ import {
     ADD_DEFAULT_ITEM_TO_CART,
     CHANGE_ORDER_ITEM,
     CHANGE_ORDER,
-    CHANGE_CUSTOMER
+    CHANGE_CUSTOMER,
+    CHANGE_INSTALLATION,
+    CHANGE_INVOICE
 } from '../../constants/OrderConstants';
 import * as apiFetcher from '../../utils/api-fetcher';
 import OrderStore from '../../stores/OrderStore';
@@ -86,6 +88,44 @@ const changeCustomer = (customerId) => {
     OrderStore.emitChange();
 }
 
+const changeInstallation = (options) => {
+    apiFetcher.post(`/api/order/${options.orderId}/installation`, {
+        installationTime: options.installationTime,
+        installer: options.installer
+    })
+        .then(() => {
+            OrderStore._orders.map(order => {
+                if (order.id === options.orderId) {
+                    order.installationTime = options.installationTime.toISOString();
+                    order.installer = options.installer;
+                }
+
+                return order;
+            })
+
+            OrderStore.emitChange();
+        });
+}
+
+const changeInvoice = (options) => {
+    apiFetcher.post(`/api/order/${options.orderId}/invoice`, {
+        totalPrice: options.totalPrice,
+        invoicePaid: false
+    })
+        .then(() => {
+            OrderStore._orders.map(order => {
+                if (order.id === options.orderId) {
+                    order.totalPrice = options.totalPrice;
+                    order.invoicePaid = false;
+                }
+
+                return order;
+            })
+
+            OrderStore.emitChange();
+        });
+}
+
 export default function (data) {
     switch (data.payload.actionType) {
         case GET_ORDERS:
@@ -117,6 +157,12 @@ export default function (data) {
             break;
         case CHANGE_CUSTOMER:
             changeCustomer(data.payload.payload);
+            break;
+        case CHANGE_INSTALLATION:
+            changeInstallation(data.payload.payload);
+            break;
+        case CHANGE_INVOICE:
+            changeInvoice(data.payload.payload);
             break;
         default:
             break;

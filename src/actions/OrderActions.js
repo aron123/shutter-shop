@@ -8,7 +8,9 @@ import {
     ADD_DEFAULT_ITEM_TO_CART,
     CHANGE_ORDER_ITEM,
     CHANGE_ORDER,
-    CHANGE_CUSTOMER
+    CHANGE_CUSTOMER,
+    CHANGE_INSTALLATION,
+    CHANGE_INVOICE
 } from '../constants/OrderConstants';
 import ShutterShopDispatcher from '../dispatcher/ShutterShopDispatcher';
 
@@ -80,6 +82,20 @@ class OrderActions {
         ShutterShopDispatcher.handleViewAction({
             actionType: CHANGE_CUSTOMER,
             payload: customerId
+        });
+    }
+
+    changeInstallation (options) {
+        ShutterShopDispatcher.handleViewAction({
+            actionType: CHANGE_INSTALLATION,
+            payload: options
+        });
+    }
+
+    changeInvoice (options) {
+        ShutterShopDispatcher.handleViewAction({
+            actionType: CHANGE_INVOICE,
+            payload: options
         });
     }
 }
