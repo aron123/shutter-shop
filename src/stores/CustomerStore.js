@@ -6,10 +6,6 @@ class CustomerStore extends EventEmitter {
     _customers = [];
     _isSaveSucceeded = null;
 
-    reset () {
-        _isSaveSucceeded = null;
-    }
-
     emitChange () {
         this.emit('change');
     }

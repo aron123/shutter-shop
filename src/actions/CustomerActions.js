@@ -1,4 +1,10 @@
-import { GET_CUSTOMERS, GET_CUSTOMER_BY_ID, REGISTER_CUSTOMER } from '../constants/CustomerConstants';
+import {
+    GET_CUSTOMERS,
+    GET_CUSTOMER_BY_ID,
+    REGISTER_CUSTOMER,
+    INITIALIZE_STORE,
+    CHANGE_SELECTED_CUSTOMER
+} from '../constants/CustomerConstants';
 import ShutterShopDispatcher from '../dispatcher/ShutterShopDispatcher';
 
 class CustomerActions {
@@ -19,6 +25,20 @@ class CustomerActions {
     registerCustomer (customer) {
         ShutterShopDispatcher.handleViewAction({
             actionType: REGISTER_CUSTOMER,
+            payload: customer
+        });
+    }
+
+    initializeCustomerStore () {
+        ShutterShopDispatcher.handleViewAction({
+            actionType: INITIALIZE_STORE,
+            payload: null
+        });
+    }
+
+    changeSelectedCustomer (customer) {
+        ShutterShopDispatcher.handleViewAction({
+            actionType: CHANGE_SELECTED_CUSTOMER,
             payload: customer
         });
     }

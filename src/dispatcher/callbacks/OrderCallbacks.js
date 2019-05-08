@@ -3,8 +3,13 @@ import {
     GET_ORDERS_BY_CUSTOMER,
     CREATE_ORDER,
     PAY_ORDER,
-    ASSEMBLE_ORDER
-} from '../constants/OrderConstants';
+    ASSEMBLE_ORDER,
+    INITIALIZE_ORDER,
+    ADD_DEFAULT_ITEM_TO_CART,
+    CHANGE_ORDER_ITEM,
+    CHANGE_ORDER,
+    CHANGE_CUSTOMER
+} from '../../constants/OrderConstants';
 import * as apiFetcher from '../../utils/api-fetcher';
 import OrderStore from '../../stores/OrderStore';
 
@@ -48,6 +53,39 @@ const assembleOrder = (orderId) => {
         });
 };
 
+const initializeOrder = () => {
+    OrderStore._orderToCreate = {
+        customerId: null,
+        items: [ new OrderStore.DefaultOrderItem() ]
+    };
+    OrderStore._isOrderCreated = null;
+    OrderStore.emitChange();
+};
+
+const addDefaultItemToCart = () => {
+    OrderStore._orderToCreate.items.push(new OrderStore.DefaultOrderItem());
+    OrderStore.emitChange();
+};
+
+const changeOrderItem = (options) => {
+    const index = options.index;
+    const itemToSave = options.item;
+
+    OrderStore._orderToCreate.items[index] = itemToSave;
+
+    OrderStore.emitChange();
+}
+
+const changeOrder = (order) => {
+    OrderStore._orderToCreate = order;
+    OrderStore.emitChange();
+};
+
+const changeCustomer = (customerId) => {
+    OrderStore._orderToCreate.customerId = customerId;
+    OrderStore.emitChange();
+}
+
 export default function (data) {
     switch (data.payload.actionType) {
         case GET_ORDERS:
@@ -64,6 +102,21 @@ export default function (data) {
             break;
         case ASSEMBLE_ORDER:
             assembleOrder(data.payload.payload);
+            break;
+        case INITIALIZE_ORDER:
+            initializeOrder();
+            break;
+        case ADD_DEFAULT_ITEM_TO_CART:
+            addDefaultItemToCart();
+            break;
+        case CHANGE_ORDER_ITEM:
+            changeOrderItem(data.payload.payload);
+            break;
+        case CHANGE_ORDER:
+            changeOrder(data.payload.payload);
+            break;
+        case CHANGE_CUSTOMER:
+            changeCustomer(data.payload.payload);
             break;
         default:
             break;
