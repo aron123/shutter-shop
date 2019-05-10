@@ -29,11 +29,7 @@ class OrderDetails extends Component {
     }
 
     formatDateString (dateString) {
-        if (typeof dateString !== 'string') {
-            return;
-        }
-
-        return dateString.replace('T', ' ').replace('Z', '').split('.')[0];
+        return new Date(dateString).toLocaleString();
     }
 
     render () {
