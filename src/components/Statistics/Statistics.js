@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import Spinner from './Spinner';
+import Spinner from '../_shared/Spinner';
 import { PieChart, BarChart } from 'react-d3-components';
-import StatisticsStore from '../stores/StatisticsStore';
-import StatisticsActions from '../actions/StatisticsActions';
+import StatisticsStore from '../../stores/StatisticsStore';
+import StatisticsActions from '../../actions/StatisticsActions';
 
 class Statistics extends Component {
     constructor (props) {

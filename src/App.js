@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import { Route, BrowserRouter as Router } from 'react-router-dom';
 
-import Statistics from './components/Statistics';
-import CreateOrder from './components/CreateOrder';
-import ViewOwnOrders from './components/ViewOwnOrders';
-import ManageOrdersByWorker from './components/ManageOrdersByWorker';
+import Statistics from './components/Statistics/Statistics';
+import CreateOrder from './components/CreateOrder/CreateOrder';
+import ViewOwnOrders from './components/ViewOwnOrders/ViewOwnOrders';
+import ManageOrdersByWorker from './components/ManageOrdersByWorker/ManageOrdersByWorker';
 
 import Navbar from './components/Navbar';
 import './App.scss';
-import ManageOrdersByManager from './components/ManageOrdersByManager';
+import ManageOrdersByManager from './components/ManageOrdersByManager/ManageOrdersByManager';
 
 
 class App extends Component {

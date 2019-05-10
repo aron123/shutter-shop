@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 
-import CustomerStore from '../stores/CustomerStore';
-import OrderStore from '../stores/OrderStore';
-import WorkerStore from '../stores/WorkerStore';
+import CustomerStore from '../../stores/CustomerStore';
+import OrderStore from '../../stores/OrderStore';
+import WorkerStore from '../../stores/WorkerStore';
 
-import CustomerActions from '../actions/CustomerActions';
-import OrderActions from '../actions/OrderActions';
-import WorkerActions from '../actions/WorkerActions';
+import CustomerActions from '../../actions/CustomerActions';
+import OrderActions from '../../actions/OrderActions';
+import WorkerActions from '../../actions/WorkerActions';
 
 import CustomerOrderList from './CustomerOrderList';
 

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import OrderActions from '../actions/OrderActions';
+import OrderActions from '../../actions/OrderActions';
 
 class PayButton extends Component {
     constructor (props) {

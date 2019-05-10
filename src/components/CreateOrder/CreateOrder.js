@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import CustomerStore from '../stores/CustomerStore';
-import CustomerActions from '../actions/CustomerActions';
-import ShutterStore from '../stores/ShutterStore';
-import ShutterActions from '../actions/ShutterActions';
-import OrderStore from '../stores/OrderStore';
-import OrderActions from '../actions/OrderActions';
+import CustomerStore from '../../stores/CustomerStore';
+import CustomerActions from '../../actions/CustomerActions';
+import ShutterStore from '../../stores/ShutterStore';
+import ShutterActions from '../../actions/ShutterActions';
+import OrderStore from '../../stores/OrderStore';
+import OrderActions from '../../actions/OrderActions';
 
 import OrderItem from './OrderItem';
 import OrderSuccessModal from './OrderSuccessModal';

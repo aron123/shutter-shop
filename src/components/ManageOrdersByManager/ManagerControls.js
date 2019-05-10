@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import DatePicker from 'react-datepicker';
-import OrderActions from '../actions/OrderActions';
+import OrderActions from '../../actions/OrderActions';
 
 class ManagerControls extends Component {
 

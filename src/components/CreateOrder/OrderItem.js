@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import windowImage from './img/window.svg';
+import windowImage from '../_img/window.svg';
 
 class OrderItem extends Component {
 

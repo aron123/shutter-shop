@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import OrderDetails from './OrderDetails';
-import BillingDetails from './BillingDetails';
+import OrderDetails from '../_shared/OrderDetails';
+import BillingDetails from '../_shared/BillingDetails';
 
 class CustomerOrderList extends Component {
 

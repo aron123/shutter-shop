@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 
-import OrderActions from '../actions/OrderActions';
-import OrderStore from '../stores/OrderStore';
-import OrderDetails from './OrderDetails';
-import WorkerStore from '../stores/WorkerStore';
-import WorkerActions from '../actions/WorkerActions';
-import BillingDetails from './BillingDetails';
-import CustomerStore from '../stores/CustomerStore';
-import CustomerActions from '../actions/CustomerActions';
+import OrderActions from '../../actions/OrderActions';
+import OrderStore from '../../stores/OrderStore';
+import OrderDetails from '../_shared/OrderDetails';
+import WorkerStore from '../../stores/WorkerStore';
+import WorkerActions from '../../actions/WorkerActions';
+import BillingDetails from '../_shared/BillingDetails';
+import CustomerStore from '../../stores/CustomerStore';
+import CustomerActions from '../../actions/CustomerActions';
 import ManagerControls from './ManagerControls';
 
 class ManageOrdersByManager extends Component {

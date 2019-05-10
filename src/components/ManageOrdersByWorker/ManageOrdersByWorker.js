@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import OrderStore from '../stores/OrderStore';
-import OrderActions from '../actions/OrderActions';
+import OrderStore from '../../stores/OrderStore';
+import OrderActions from '../../actions/OrderActions';
 
 class ManageOrdersByWorker extends Component {
 
