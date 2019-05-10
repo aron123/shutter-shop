@@ -17,7 +17,9 @@ class ViewOwnOrders extends Component {
 
         CustomerActions.getCustomers();
         WorkerActions.getWorkers();
+        OrderActions.resetFilteredOrders();
         this._onChange = this._onChange.bind(this);
+
         this.state = {
             customers: CustomerStore._customers,
             workers: WorkerStore._workers,

@@ -10,7 +10,8 @@ import {
     CHANGE_ORDER,
     CHANGE_CUSTOMER,
     CHANGE_INSTALLATION,
-    CHANGE_INVOICE
+    CHANGE_INVOICE,
+    RESET_FILTERED_ORDERS
 } from '../constants/OrderConstants';
 import ShutterShopDispatcher from '../dispatcher/ShutterShopDispatcher';
 
@@ -96,6 +97,13 @@ class OrderActions {
         ShutterShopDispatcher.handleViewAction({
             actionType: CHANGE_INVOICE,
             payload: options
+        });
+    }
+
+    resetFilteredOrders () {
+        ShutterShopDispatcher.handleViewAction({
+            actionType: RESET_FILTERED_ORDERS,
+            payload: null
         });
     }
 }

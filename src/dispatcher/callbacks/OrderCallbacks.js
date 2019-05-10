@@ -10,7 +10,8 @@ import {
     CHANGE_ORDER,
     CHANGE_CUSTOMER,
     CHANGE_INSTALLATION,
-    CHANGE_INVOICE
+    CHANGE_INVOICE,
+    RESET_FILTERED_ORDERS
 } from '../../constants/OrderConstants';
 import * as apiFetcher from '../../utils/api-fetcher';
 import OrderStore from '../../stores/OrderStore';
@@ -86,7 +87,7 @@ const changeOrder = (order) => {
 const changeCustomer = (customerId) => {
     OrderStore._orderToCreate.customerId = customerId;
     OrderStore.emitChange();
-}
+};
 
 const changeInstallation = (options) => {
     apiFetcher.post(`/api/order/${options.orderId}/installation`, {
@@ -105,7 +106,7 @@ const changeInstallation = (options) => {
 
             OrderStore.emitChange();
         });
-}
+};
 
 const changeInvoice = (options) => {
     apiFetcher.post(`/api/order/${options.orderId}/invoice`, {
@@ -124,7 +125,12 @@ const changeInvoice = (options) => {
 
             OrderStore.emitChange();
         });
-}
+};
+
+const resetFilteredOrders = () => {
+    OrderStore._filteredOrders = [];
+    OrderStore.emitChange();
+};
 
 export default function (data) {
     switch (data.payload.actionType) {
@@ -163,6 +169,9 @@ export default function (data) {
             break;
         case CHANGE_INVOICE:
             changeInvoice(data.payload.payload);
+            break;
+        case RESET_FILTERED_ORDERS:
+            resetFilteredOrders();
             break;
         default:
             break;

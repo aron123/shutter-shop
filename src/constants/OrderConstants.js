@@ -10,5 +10,6 @@ module.exports = {
     CHANGE_ORDER: 'change-order',
     CHANGE_CUSTOMER: 'change-customer',
     CHANGE_INSTALLATION: 'change-installation',
-    CHANGE_INVOICE: 'change-invoice'
+    CHANGE_INVOICE: 'change-invoice',
+    RESET_FILTERED_ORDERS: 'reset-filtered-orders'
 };
