@@ -27,6 +27,7 @@ class CreateOrder extends Component {
         
         this.state = {
             showOrderPanel: false,
+            disableInputs: false,
             customers: CustomerStore._customers,
             selectedCustomer: CustomerStore._customer,
             shutters: ShutterStore._shutters,
@@ -79,6 +80,9 @@ class CreateOrder extends Component {
         const customerId = event.target.value === NEW_CUSTOMER_KEY ? null : event.target.value;
         const order = this.state.order;
         order.customerId = customerId;
+
+        this.setState({ disableInputs: Boolean(customerId) });
+
         CustomerActions.changeSelectedCustomer(this.getCustomerData(customerId));
         OrderActions.changeOrder(order);
     }
@@ -134,7 +138,7 @@ class CreateOrder extends Component {
                         <div className="form-group row">
                             <label htmlFor="name" className="col-sm-2">Name:</label>
                             <div className="col-sm-10">
-                                <input type="text" className="form-control" id="name" disabled={this.state.showOrderPanel}
+                                <input type="text" className="form-control" id="name" disabled={this.state.showOrderPanel || this.state.disableInputs}
                                     value={this.state.selectedCustomer ? this.state.selectedCustomer.name : ''}
                                     onChange={(e) => this.onCustomerDataChanged(e, 'name')}></input>
                             </div>
@@ -142,7 +146,7 @@ class CreateOrder extends Component {
                         <div className="form-group row">
                             <label htmlFor="address" className="col-sm-2">Address:</label>
                             <div className="col-sm-10">
-                                <input type="text" className="form-control" id="address" disabled={this.state.showOrderPanel}
+                                <input type="text" className="form-control" id="address" disabled={this.state.showOrderPanel || this.state.disableInputs}
                                     value={this.state.selectedCustomer ? this.state.selectedCustomer.address : ''}
                                     onChange={(e) => this.onCustomerDataChanged(e, 'address')}></input>
                             </div>
@@ -150,7 +154,7 @@ class CreateOrder extends Component {
                         <div className="form-group row">
                             <label htmlFor="mobile" className="col-sm-2">Mobile:</label>
                             <div className="col-sm-10">
-                                <input type="text" className="form-control" id="mobile" disabled={this.state.showOrderPanel}
+                                <input type="text" className="form-control" id="mobile" disabled={this.state.showOrderPanel || this.state.disableInputs}
                                     value={this.state.selectedCustomer ? this.state.selectedCustomer.mobile : ''}
                                     onChange={(e) => this.onCustomerDataChanged(e, 'mobile')}></input>
                             </div>
@@ -158,7 +162,7 @@ class CreateOrder extends Component {
                         <div className="form-group row">
                             <label htmlFor="username" className="col-sm-2">Username:</label>
                             <div className="col-sm-10">
-                                <input type="text" className="form-control" id="username" disabled={this.state.showOrderPanel}
+                                <input type="text" className="form-control" id="username" disabled={this.state.showOrderPanel || this.state.disableInputs}
                                     value={this.state.selectedCustomer ? this.state.selectedCustomer.userName : ''}
                                     onChange={(e) => this.onCustomerDataChanged(e, 'userName')}></input>
                             </div>
