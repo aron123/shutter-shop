@@ -183,7 +183,7 @@ class CreateOrder extends Component {
                     </div>
                     <div className="row justify-content-center">
                         <div className="col-md-9 text-center">
-                            <button className="btn btn-primary mt-2 mb-2 text-bold" onClick={OrderActions.addDefaultItemToCart}>+</button>
+                            <button className="btn btn-primary mt-2 mb-2 btn-circle" onClick={OrderActions.addDefaultItemToCart}>+</button>
                         </div>
                     </div>
                     <div className="row justify-content-center">

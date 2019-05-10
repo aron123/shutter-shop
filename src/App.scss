@@ -11,3 +11,28 @@
     // Bootstrap sets it to 0, so chart tooltips are invisible without this line
     opacity: 1;
 }
+
+.btn-circle {
+    $circle-radius: 50%;
+    $side-length: 45px;
+
+    border-radius: $circle-radius;
+    font-weight: bold;
+
+    -webkit-transition: -webkit-transform .6s ease-in-out;
+    transition: transform .6s ease-in-out;
+    
+    height: $side-length;
+    width: $side-length;
+}
+
+.btn-circle:hover {
+    $rotation-deg: 360deg;
+    $secondary-color: $red;
+
+    box-shadow: 0 0 12px 0 #838080;
+    -webkit-transform: rotate($rotation-deg);
+    transform-origin: 50% 50%;
+    transform: rotate($rotation-deg);
+    background-color: $secondary-color;
+}
