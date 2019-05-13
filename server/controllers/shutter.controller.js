@@ -1,10 +1,10 @@
 const handlers = require('./shared/response.handlers');
 const { Shutter } = require('../models/Shutter');
-const repository = require('../repositories/shutter.repository');
+const service = require('../services/shutter.service');
 
 const getAllShutters = async (req, res) => {
     try {
-        const shutters = await repository.getAllShutters();
+        const shutters = await service.getAllShutters();
         const result = handlers.sanitize(Shutter, shutters);
         handlers.sendSuccessResponse(res, result);
     } catch (err) {
@@ -15,7 +15,7 @@ const getAllShutters = async (req, res) => {
 
 const getShutterById = async (req, res) => {
     try {
-        const shutter = await repository.getShutterById(req.params.id);
+        const shutter = await service.getShutterById(req.params.id);
         const result = handlers.sanitize(Shutter, shutter);
         handlers.sendSuccessResponse(res, result);
     } catch (err) {

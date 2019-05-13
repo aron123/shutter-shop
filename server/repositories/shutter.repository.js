@@ -4,7 +4,7 @@ const collection = require('../utils/database').getDatabase().collection('shutte
 
 const getAllShutters = () => {
     return collection.find().toArray();
-}
+};
 
 const getShutterById = (id) => {
     return collection.findOne({ _id: new ObjectId(id) });

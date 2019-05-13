@@ -1,11 +1,11 @@
 const handlers = require('./shared/response.handlers');
 const { Employee } = require('../models/Employee');
 
-const repository = require('../repositories/employee.repository');
+const service = require('../services/employee.service');
 
 const getAllEmployees = async (req, res) => {
     try {
-        const employees = await repository.getAllEmployees();
+        const employees = await service.getAllEmployees();
         const result = handlers.sanitize(Employee, employees);
         handlers.sendSuccessResponse(res, result);
     } catch (err) {
@@ -16,7 +16,7 @@ const getAllEmployees = async (req, res) => {
 
 const getEmployeeById = async (req, res) => {
     try {
-        const employee = await repository.getEmployeeById(req.params.id);
+        const employee = await service.getEmployeeById(req.params.id);
         const result = handlers.sanitize(Employee, employee);
         handlers.sendSuccessResponse(res, result);
     } catch (err) {

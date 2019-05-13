@@ -5,12 +5,12 @@ const { InitialOrderByUser } = require('../models/Order');
 const { Installation } = require('../models/_installation');
 const { Invoice } = require('../models/_invoice');
 
-const shutterRepository = require('../repositories/shutter.repository');
-const repository = require('../repositories/order.repository');
+const shutterService = require('../services/shutter.service');
+const service = require('../services/order.service');
 
 const getAllOrders = async (req, res) => {
     try {
-        const orders = await repository.getAllOrders();
+        const orders = await service.getAllOrders();
         const result = handlers.sanitize(Order, orders);
         handlers.sendSuccessResponse(res, result);
     } catch (err) {
@@ -21,7 +21,7 @@ const getAllOrders = async (req, res) => {
 
 const getOrdersOfCustomer = async (req, res) => {
     try {
-        const orders = await repository.getOrdersOfCustomer(req.params.id);
+        const orders = await service.getOrdersOfCustomer(req.params.id);
         const result = handlers.sanitize(Order, orders);
         handlers.sendSuccessResponse(res, result);
     } catch (err) {
@@ -32,7 +32,7 @@ const getOrdersOfCustomer = async (req, res) => {
 
 const getOrderById = async (req, res) => {
     try {
-        const order = await repository.getOrderById(req.params.id);
+        const order = await service.getOrderById(req.params.id);
         const result = handlers.sanitize(Order, order);
         handlers.sendSuccessResponse(res, result);
     } catch (err) {
@@ -47,11 +47,11 @@ const addOrder = async (req, res) => {
 
         // copy whole shutter objects to items array
         for (const i in orderRequest.items) {
-            orderRequest.items[i].shutter = await shutterRepository.getShutterById(orderRequest.items[i].shutter);
+            orderRequest.items[i].shutter = await shutterService.getShutterById(orderRequest.items[i].shutter);
         }
 
         const orderToAdd = new InitialOrderByUser(orderRequest);
-        const result = await repository.createOrder(orderToAdd);
+        const result = await service.createOrder(orderToAdd);
 
         handlers.sendSuccessResponse(res, { id: result.insertedId });
     } catch (err) {
@@ -62,7 +62,7 @@ const addOrder = async (req, res) => {
 
 const assembleOrder = async (req, res) => {
     try {
-        await repository.assembleOrder(req.params.id);
+        await service.assembleOrder(req.params.id);
         handlers.sendSuccessResponse(res);
     } catch (err) {
         console.error(err);
@@ -72,7 +72,7 @@ const assembleOrder = async (req, res) => {
 
 const payInvoiceOfOrder = async (req, res) => {
     try {
-        await repository.payInvoiceOfOrder(req.params.id);
+        await service.payInvoiceOfOrder(req.params.id);
         handlers.sendSuccessResponse(res);
     } catch (err) {
         console.error(err);
@@ -84,7 +84,7 @@ const organizeInstallation = async (req, res) => {
     try {
         const id = req.params.id;
         const installation = new Installation(req.body);
-        await repository.setInstallation(id, installation);
+        await service.setInstallation(id, installation);
         handlers.sendSuccessResponse(res);
     } catch (err) {
         console.error(err);
@@ -96,7 +96,7 @@ const createInvoice = async (req, res) => {
     try {
         const id = req.params.id;
         const invoice = new Invoice(req.body);
-        await repository.setInvoice(id, invoice);
+        await service.setInvoice(id, invoice);
         handlers.sendSuccessResponse(res);
     } catch (err) {
         console.error(err);
